@@ -11,7 +11,7 @@ import javascript
 //     exists(Expr dollarArg | dollarArg = dollarCallWithArgument.getAnArgument())
 // select dollarCallWithArgument
 
-from CallExpr dollarCallWithArgument
-where dollarCallWithArgument.getCalleeName() = "$" and 
-    exists(dollarCallWithArgument.getAnArgument())
-select dollarCallWithArgument
+from DataFlow::FunctionNode function, DataFlow::ParameterNode parameter
+where function = jquery().getAPropertyRead("fn").getAPropertySource() and
+    parameter = function.getLastParameter()
+select function, parameter
